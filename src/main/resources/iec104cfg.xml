@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root>
+    <address>192.168.1.82</address>
+    <port>7070</port>
+    <timeout>5000</timeout>
+    <serverId>surza</serverId>
+    <measurements/>
+    <commands>
+        <command commonAddress="1" asduAddress="1" ioAddress="4001" commandType="SinglePointSetPoint" setTimeTag="false" name="BMode"/>
+
+        <command commonAddress="1" asduAddress="1" ioAddress="8001" commandType="ShortFloatingSetPoint" setTimeTag="false" name="PgenSet"/>
+        <command commonAddress="1" asduAddress="1" ioAddress="8002" commandType="ShortFloatingSetPoint" setTimeTag="false" name="QgenSet"/>
+        <command commonAddress="1" asduAddress="1" ioAddress="8003" commandType="ShortFloatingSetPoint" setTimeTag="false" name="IChargeSet"/>
+
+    </commands>
+    <measurements>
+        <measurement commonAddress="1" ioAddress="6001" name="U"/>
+        <measurement commonAddress="1" ioAddress="6002" name="Pgen"/>
+        <measurement commonAddress="1" ioAddress="6003" name="Qgen"/>
+        <measurement commonAddress="1" ioAddress="6004" name="Pload"/>
+        <measurement commonAddress="1" ioAddress="6005" name="Qload"/>
+        <measurement commonAddress="1" ioAddress="6006" name="ICharge"/>
+        <measurement commonAddress="1" ioAddress="6007" name="SOC"/>
+
+        <measurement commonAddress="1" ioAddress="1001" name="BatteryModeMeas"/>
+    </measurements>
+</root>

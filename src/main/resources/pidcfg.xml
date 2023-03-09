@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RSettings>
+    <Unom>220</Unom>
+    <uSetPoint>218.8</uSetPoint>
+    <minDeltaU>0.5</minDeltaU>
+
+    <regulatorStepMs>500</regulatorStepMs>
+    <initialStartDelay>3000</initialStartDelay>
+
+    <minOutput>0</minOutput>
+    <maxOutput>100</maxOutput>
+
+    <setpointsControl>Automatic</setpointsControl>
+    <OperationMode>PowerOutput</OperationMode>
+    <timeInModeSetpoint>10000</timeInModeSetpoint>
+
+
+    <Kp>0.5</Kp>
+    <Ki>0.7</Ki>
+    <Kd>0</Kd>
+
+</RSettings>
