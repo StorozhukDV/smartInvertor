@@ -23,8 +23,8 @@ public class AdapterPID extends GenericPid{
     private boolean pTest = true;
     private boolean qTest = true;
 
-    private Optional<MeasurementTO> initialP;
-    private Optional<MeasurementTO> initialQ;
+    private double initialP;
+    private double initialQ;
 
     public AdapterPID(DataContainer dataContainer, RegulatorSettings rs) {
         super(dataContainer, rs);
@@ -44,24 +44,21 @@ public class AdapterPID extends GenericPid{
         }
 
         if(pTest&testCycle==0){
-            initialP = dataContainer.findLastByTag(rs.getTags().get(Tag.MeasPOutput));
-            initialQ = dataContainer.findLastByTag(rs.getTags().get(Tag.MeasQOutput));
-            log.info("Adapter mode. P test");
-            if(initialP.isPresent()){
-                prevOutput = initialP.get().getValue();
+            Optional<MeasurementTO> P = dataContainer.findLastByTag(rs.getTags().get(Tag.MeasPOutput));
+            Optional<MeasurementTO> Q = dataContainer.findLastByTag(rs.getTags().get(Tag.MeasQOutput));
+            if(P.isPresent()& Q.isPresent()){
+                initialP = P.get().getValue();
+                initialQ = Q.get().getValue();
             }
             else{
-                log.error("No initial value of P meas.");
+                log.error("No initial values for P and Q meas, need to check debug!");
             }
+            log.info("Adapter mode. P test");
+            prevOutput = initialP;
         }
         if(!pTest&qTest&testCycle==0){
             log.info("Adapter mode. Q test");
-            if(initialQ.isPresent()){
-                prevOutput = initialQ.get().getValue();
-            }
-            else{
-                log.error("No initial value of Q meas.");
-            }
+            prevOutput = initialQ;
         }
 
         if(testCycle==0){
@@ -127,7 +124,7 @@ public class AdapterPID extends GenericPid{
 
         if(pTest){
             P = outValue;
-            Q = initialQ.get().getValue();
+            Q = initialQ;
         }
         if(!pTest&qTest){
             P = adapter.getSample(0).getSOut();
@@ -135,17 +132,12 @@ public class AdapterPID extends GenericPid{
         }
         if(!pTest&qTest&testCycle==0){
             P = adapter.getSample(0).getSOut();
-            Q = initialQ.get().getValue();
+            Q = initialQ;
         }
         if(!pTest&!qTest){
-            if(initialP.isPresent()&initialQ.isPresent()){
-                P = initialP.get().getValue();
-                Q = initialQ.get().getValue();
-                log.info("Adapter mode is completed, return back to initial output values.P = {} and Q = {}",P,Q);
-            }
-            else{
-                log.info("No initial datas for P and Q, check in debug.");
-            }
+            P = initialP;
+            Q = initialQ;
+            log.info("Adapter mode is completed, return back to initial output values.P = {} and Q = {}",P,Q);
         }
 
         dataContainer.setCommand(rs.getTags().get(Tag.CtrlPOutput), P);
